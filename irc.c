@@ -90,9 +90,7 @@ static void panic(const char *m) {
 	exit(1);
 }
 
-static size_t
-utf8validate(Rune *u, size_t i)
-{
+static size_t utf8validate(Rune *u, size_t i) {
 	if (*u < utfmin[i] || *u > utfmax[i] || (0xD800 <= *u && *u <= 0xDFFF))
 		*u = RuneInvalid;
 	for (i = 1; *u > utfmax[i]; ++i)
@@ -100,18 +98,14 @@ utf8validate(Rune *u, size_t i)
 	return i;
 }
 
-static Rune
-utf8decodebyte(unsigned char c, size_t *i)
-{
+static Rune utf8decodebyte(unsigned char c, size_t *i) {
 	for (*i = 0; *i < UtfSz + 1; ++(*i))
 		if ((c & utfmask[*i]) == utfbyte[*i])
 			return c & ~utfmask[*i];
 	return 0;
 }
 
-static size_t
-utf8decode(char *c, Rune *u, size_t clen)
-{
+static size_t utf8decode(char *c, Rune *u, size_t clen) {
 	size_t i, j, len, type;
 	Rune udecoded;
 
@@ -133,15 +127,11 @@ utf8decode(char *c, Rune *u, size_t clen)
 	return len;
 }
 
-static char
-utf8encodebyte(Rune u, size_t i)
-{
+static char utf8encodebyte(Rune u, size_t i) {
 	return utfbyte[i] | (u & ~utfmask[i]);
 }
 
-static size_t
-utf8encode(Rune u, char *c)
-{
+static size_t utf8encode(Rune u, char *c) {
 	size_t len, i;
 
 	len = utf8validate(&u, 0);
@@ -271,9 +261,7 @@ static void hangup(void) {
 	}
 }
 
-static inline int
-chfind(const char *name)
-{
+static inline int chfind(const char *name) {
 	int i;
 
 	assert(name);
@@ -283,9 +271,7 @@ chfind(const char *name)
 	return i;
 }
 
-static int
-chadd(const char *name, int joined)
-{
+static int chadd(const char *name, int joined) {
 	int n;
 
 	if (nch >= MaxChans || strlen(name) >= ChanLen)
@@ -307,9 +293,7 @@ chadd(const char *name, int joined)
 	return nch;
 }
 
-static int
-chdel(char *name)
-{
+static int chdel(char *name) {
 	int n;
 
 	if (!(n = chfind(name)))
@@ -322,9 +306,7 @@ chdel(char *name)
 	return 1;
 }
 
-static char *
-pushl(char *p, char *e)
-{
+static char * pushl(char *p, char *e) {
 	int x, cl;
 	char *w;
 	Rune u[2];
