@@ -1,4 +1,4 @@
-# Simple Relay Chat
+# Simple Internet Relay Chat
 written in C
 
 ## Install 
